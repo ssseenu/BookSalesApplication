@@ -18,7 +18,7 @@ public class OrderService {
 		
 	}
 	
-	public List<Order> findAllOrders(int userId){
+	public List<Order> findAllOrders(){
 		return orderRepository.findByOrderByIdDesc();
 	}
 	
@@ -26,7 +26,11 @@ public class OrderService {
 		return orderRepository.findAll();
 	}
 	
-	public Order findOne(int orderId){
-		return orderRepository.findOne(orderId);
+	public Order findOne(int id){
+		return orderRepository.findOne(id);
 	}
+	public List<Order> findByUserIdOrderByIdDesc(int userid) {
+		return orderRepository.findByUserIdOrderByIdDesc(userid);
+	}
+
 }

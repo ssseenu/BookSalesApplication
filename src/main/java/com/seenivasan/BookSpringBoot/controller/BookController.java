@@ -35,7 +35,7 @@ public class BookController {
 	@GetMapping("/{isbn}")
 	public String bookDetails(@PathVariable("isbn") long isbn, HttpSession session) {
 		Book book = bookService.findOne(isbn);
-		session.setAttribute("books", book);
+		session.setAttribute("SELECTED_BOOK", book);
 		logger.info("Book :" +book);
 		return "book/show";
 

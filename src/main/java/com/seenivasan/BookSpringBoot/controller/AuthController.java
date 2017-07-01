@@ -29,10 +29,11 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String userName, @RequestParam("password") String password) {
+	public String login(@RequestParam("username") String userName, @RequestParam("password") String password,HttpSession session) {
 		User user = userService.findByUserNameAndPassword(userName, password);
 		System.out.println(user);
 		if(user != null){
+			session.setAttribute("USER_LOGGED", user);
 			logger.info("Login success");
 			return "redirect:../book/list";
 		}

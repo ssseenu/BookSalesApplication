@@ -1,5 +1,6 @@
 package com.seenivasan.BookSpringBoot.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,4 +46,6 @@ public class Order {
 	@OneToMany(mappedBy = "order", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
+	@Column(name = "cancelled_date")
+	private LocalDate cancelledDate;
 }

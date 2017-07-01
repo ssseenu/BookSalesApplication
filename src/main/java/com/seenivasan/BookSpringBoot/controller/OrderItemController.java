@@ -25,7 +25,7 @@ public class OrderItemController {
 	private BookService bookService;
 
 	@PostMapping("/addToCart")
-	public String addToCart(@RequestParam("book_id") Long isbn, @RequestParam("quantity") Integer quantity,
+	public String addToCart(@RequestParam("book_isbn") Long isbn, @RequestParam("quantity") Integer quantity,
 			HttpSession session) {
 
 		User user = (User) session.getAttribute("USER_LOGGED");
@@ -73,7 +73,7 @@ public class OrderItemController {
 
 		// orderService.save(order);
 
-		return "redirect:../orders/cart";
+		return "redirect:../order/cart";
 	}
 
 	@GetMapping("/list")
@@ -96,7 +96,7 @@ public class OrderItemController {
 			session.setAttribute("MY_CART_ITEMS", order);
 		}
 
-		return "redirect:../orders/cart";
+		return "redirect:../order/cart";
 
 	}
 
@@ -104,7 +104,7 @@ public class OrderItemController {
 	public String emptyCartid(HttpSession session) {
 
 		session.removeAttribute("MY_CART_ITEMS");
-		return "redirect:../orders/cart";
+		return "redirect:../order/cart";
 
 	}
 }

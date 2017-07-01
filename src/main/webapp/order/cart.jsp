@@ -1,16 +1,33 @@
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+
+
 <html>
 <head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cart</title>
+<title>List</title>
+<style>
+</style>
 </head>
 <body>
-<c:if test="${empty MY_CART_ITEMS || MY_CART_ITEMS.bookSalesItems.isEmpty()}">
+	
+	<div class="content">
+		<div class="container-fluid">
+
+			<div class="row">
+
+				<div class="col-md-8">
+					<h5>My Cart</h5>
+					<c:if test="${empty MY_CART_ITEMS || MY_CART_ITEMS.orderItems.isEmpty()}">
+						<img src="../assets/images/empty-cart.png" width="300" />
 						<h5>Your Shopping Cart is empty</h5>
-						<a href="../book" class="btn btn-info">Continue Shopping</a>
+						<a href="../book/list" class="btn btn-info">Continue Shopping</a>
 					</c:if>
-					<c:if test="${!empty MY_CART_ITEMS && !MY_CART_ITEMS.bookSalesItems.isEmpty()}">
+					<c:if test="${!empty MY_CART_ITEMS && !MY_CART_ITEMS.orderItems.isEmpty()}">
 						<table border="1" class="table table-bordered">
 							<thead>
 								<tr>
@@ -22,15 +39,17 @@
 							</thead>
 							<tbody>
 
-								<c:forEach items="${MY_CART_ITEMS.bookSalesItems}" var="item"
+								<c:forEach items="${MY_CART_ITEMS.orderItems}" var="item"
 									varStatus="loop">
 									<tr>
 										<td>${loop.index+1}</td>
 										<td>${item.book.title}</td>
 										<td>${item.quantity}</td>
 										<td>Rs.${item.book.price*item.quantity }</td>
-										<td><a href="../orderItems/remove?id=${loop.index}"
+										<td><a href="../orderItem/remove?id=${loop.index+1}"
 											class="btn btn-danger">Remove</a>
+											
+											
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -38,24 +57,26 @@
 
 
 						<br />
-						<a href="../book" class="btn btn-info">Continue Shopping</a>
+						<a href="../book/list" class="btn btn-info">Continue Shopping</a>
 
 
 					</c:if>
+				</div>
 
-				<c:if test="${ MY_CART_ITEMS != null && MY_CART_ITEMS.bookSalesItems.size()>0}">
+				<c:if test="${ MY_CART_ITEMS != null && MY_CART_ITEMS.orderItems.size()>0}">
+					<div class="col-md-4">
 						<b>Price Details</b>
 
 						<c:set var="no_of_items"
-							value="${MY_CART_ITEMS.bookSalesItems.size()}" />
+							value="${MY_CART_ITEMS.orderItems.size()}" />
 						<c:set var="total_price" value="0" />
-						<c:forEach items="${MY_CART_ITEMS.bookSalesItems}" var="item">
+						<c:forEach items="${MY_CART_ITEMS.orderItems}" var="item">
 							<c:set var="total_price"
 								value="${total_price + item.book.price*item.quantity}" />
 						</c:forEach>
 
 						<form name="orderForm" action="../order/save" method="post">
-							<input type= "hidden" name="total_price" value="${total_price}" />
+							<input type="hidden" name="total_price" value="${total_price}" />
 							<table border="1" class="table table-bordered">
 
 								<tbody>
@@ -74,11 +95,16 @@
 									<tr>
 										<td colspan="2" align="center">
 										
-										<button type="submit" >Place an Order</button></td>
+										<button type="submit" 
+											class="btn btn-success btn-block" >Place an Order</button></td>
 									</tr>
 								</tbody>
 							</table>
 						</form>
+					</div>
 				</c:if>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
