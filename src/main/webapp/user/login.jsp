@@ -26,8 +26,8 @@
 				</div>
 				</form>
 				<div>
-				Not a member yet ? <a href = "../auth/register"><input type="submit" value="Join us" /> </a> 
-				</div><br><a href="#">Forgot Password?</a><br>
+				 Join Us <a href = "../auth/register"><input type="submit" value="Join us" /> </a> 
+				</div><br><a href="../auth/resetPassword">Forgot Password?</a><br>
 			<div class="button"></div>
 		</section>
 	</div>

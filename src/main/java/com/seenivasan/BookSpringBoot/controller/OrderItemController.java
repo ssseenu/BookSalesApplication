@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import com.seenivasan.BookSpringBoot.service.BookService;
 @Controller
 @RequestMapping("orderItem")
 public class OrderItemController {
+	
+	private final static Logger logger = Logger.getLogger(OrderItemController.class);
 
 	@Autowired
 	private BookService bookService;
@@ -40,7 +43,7 @@ public class OrderItemController {
 			order.setStatus("ORDERED");
 		}
 
-		// store orderItems
+		// storing orderItems
 		List<OrderItem> orderItem = order.getOrderItems();
 
 		// If already the item is added to cart, then add the quantity
@@ -76,16 +79,10 @@ public class OrderItemController {
 		return "redirect:../order/cart";
 	}
 
-	@GetMapping("/list")
-	public String list(HttpSession session) {
-		return null;
-
-	}
-
 	@GetMapping("/remove")
 	public String removeItemFromCart(@RequestParam("id") Integer id, HttpSession session) {
 
-		System.out.println("Remove Item from Card:" + id);
+		logger.info("Remove Item from Card:" + id);
 		Order order = (Order) session.getAttribute("MY_CART_ITEMS");
 
 		if (order != null && order.getOrderItems().size() > 0) {

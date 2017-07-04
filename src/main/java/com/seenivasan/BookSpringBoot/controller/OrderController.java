@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+//import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +22,8 @@ import com.seenivasan.BookSpringBoot.service.OrderService;
 @RequestMapping("order")
 public class OrderController {
 
+	//private final static Logger logger = Logger.getLogger(OrderController.class);
+	
 	@Autowired
 	private OrderService orderService;
 
@@ -31,19 +34,6 @@ public class OrderController {
 		List<Order> list = orderService.findByUserIdOrderByIdDesc(loggedInUser.getId());
 		modelMap.addAttribute("MY_ORDERS", list);
 		return "order/listmyorders";
-
-	}
-
-	@GetMapping
-	public String list(ModelMap modelMap, HttpSession session) {
-
-		List<Order> list = orderService.findAllOrders();
-		System.out.println("orders:" + list.size());
-		for (Order order : list) {
-			System.out.println(order);
-		}
-		modelMap.addAttribute("ORDERS_LIST", list);
-		return "list";
 
 	}
 
@@ -73,7 +63,12 @@ public class OrderController {
 
 	@GetMapping("/cart")
 	public String cart() {
-		return "order/cart";
+		return "order/placeOrder";
+	}
+	
+	@GetMapping("/checkout")
+	public String checkout(){
+		return "order/checkout";
 	}
 
 }

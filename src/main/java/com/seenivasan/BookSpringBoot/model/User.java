@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.seenivasan.BookSpringBoot.model.Role;
 
 import lombok.Data;
 
@@ -42,10 +46,11 @@ public class User {
 	@NotNull
 	@Column(name="user_status")
 	private char userStatus;
-	public User()
-	{
-		
-	}
+	
+	@ManyToOne
+	@JoinColumn(name="user_role_id")
+	private Role role;
+	
 	public User( String name, String userName, String password, long mobileNo, String emailId) {
 		super();
 		

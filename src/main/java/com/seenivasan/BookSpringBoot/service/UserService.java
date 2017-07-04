@@ -37,4 +37,8 @@ public class UserService {
 		return userRepository.updatePassword(newPassword, userName, 'A');
 		
 	}
+	public User updatePassword(User user) {
+		return userRepository.save(user);
+		
+	}
 }

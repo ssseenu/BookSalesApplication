@@ -1,6 +1,8 @@
 package com.seenivasan.BookSpringBoot.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -29,17 +31,26 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String userName, @RequestParam("password") String password,HttpSession session) {
-		User user = userService.findByUserNameAndPassword(userName, password);
-		System.out.println(user);
-		if(user != null){
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+		logger.info("Entering Login " + username + "-" + password);
+
+		User user = userService.findByUserNameAndPassword(username, password);
+		logger.info("User:" + user);
+		
+		if (user != null) {
 			session.setAttribute("USER_LOGGED", user);
-			logger.info("Login success");
+			logger.info("Login Success");
+			if(user.getUserName().equals("admin") && user.getPassword().equals("admin")){
+				List<User> userList = null;
+				userList = userService.findAll();
+				System.out.println(userList);
+				session.setAttribute("USERS_LIST", userList);
+				return "user/list";
+			}
 			return "redirect:../book/list";
-		}
-		else{
-			logger.info("Login failure");
-			return "home"; 
+		} else {
+			logger.error("Login Failure");
+			return "user/login";
 		}
 	}
 	
@@ -55,31 +66,32 @@ public class AuthController {
 			@RequestParam("userStatus") char userStatus){
 		User user = new User(name,userName,password,mobileNo,emailId);
 		userService.register(user);
-		return "home";
+		return "index";
 	}
 	
-	@GetMapping("/reset-password")
+	@GetMapping("/resetPassword")
 	public String resetPassword() {
-		return "user/ResetPassword";
+		return "user/resetpassword";
 	}
 
-	@PostMapping("/reset-password")
-	public String resetPassword(@RequestParam("username") String userName,
+	@PostMapping("/resetPassword")
+	public String resetPassword(@RequestParam("username") String username,
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmNewPassword") String confirmNewPassword) {
-		User user = userService.findByUserName(userName);
+		User user = userService.findByUserName(username);
 		logger.info("User:" + user);
 		if (user != null)
 			if (newPassword.equals(confirmNewPassword)) {
-				userService.updatePassword(newPassword, userName);
-				return "home";
+				user.setPassword(newPassword);
+				userService.updatePassword(user);
+				return "redirect:../auth/login";
 			}
-		return "home";
+		return "user/resetpassword";
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		System.out.println("Logging out");
 		session.invalidate();
-		return "home";
+		return "index";
 	}
 }
