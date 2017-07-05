@@ -62,4 +62,9 @@ public class User {
 		this.userStatus = 'A';
 	}
 
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

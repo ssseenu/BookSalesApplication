@@ -1838,6 +1838,7 @@
 
 	form {
 		margin: 0 0 2em 0;
+		
 	}
 
 	label {
@@ -1845,7 +1846,7 @@
 		display: block;
 		font-size: 0.9em;
 		font-weight: 700;
-		margin: 0 0 1em 0;
+		margin: 0 0 100em 0;
 	}
 
 	input[type="text"],
@@ -1867,7 +1868,7 @@
 		outline: 0;
 		padding: 0 1em;
 		text-decoration: none;
-		width: 100%;
+		width: 30%;
 	}
 
 		input[type="text"]:invalid,

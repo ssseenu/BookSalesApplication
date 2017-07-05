@@ -24,7 +24,7 @@
 		<ul class="links">
 			<li><a href="index.jsp">Home</a></li>
 			<li><a href="../book/list">Book</a></li>
-			<li><a href="elements.html">Admin</a></li>
+			<li><a href="../auth/login">Admin</a></li>
 		</ul>
 		<ul class="actions vertical">
 			<li><a href="../auth/login" class="button fit">Login</a></li>
